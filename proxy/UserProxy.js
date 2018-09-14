@@ -19,4 +19,8 @@ function addUser(callback) {
     })
 }
 
+function getCount(callback) {
+    //TODO get count
+}
+
 module.exports.addUser = addUser;
