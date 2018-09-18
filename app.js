@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyPaser.urlencoded({extended: false}));
 app.use('/', indexRouter);
-app.use('/user', usersRouter);
+app.use('/user.json', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -24,7 +24,8 @@ router.get('/count', function (req, res, next) {
     res.send("Total user count: "  + 5);
 })
 
-router.post('/register', function (req, res, next) {
+router.post('/', function (req, res, next) {
+    console.log(req.body);
     userProxy.addUser(function (error, user) {
         if (error) {
           res.send('error happened');
