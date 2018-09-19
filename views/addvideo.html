@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加</title>
+</head>
+<body>
+<form action="/video.json" method="post" onsubmit="return beforeSubmit()">
+    视频ID: <input type="text" name="id"> <br />
+    分类: <select name="category">
+            <option value="1">男双</option>
+            <option value="2">混双</option>
+            <option value="3">女双</option>
+            <option value="4">男单</option>
+            <option value="5">女单</option>
+         </select> <br />
+    标题: <input type="text" name="title"> <br/>
+    地点: <input type="text" name="location"> <br/>
+    时间: <input type="text" name="year"> <br />
+    标签: <input type="text" id="fname">
+    <div id="checkboxwrap" style="display:none">
+        <input type="checkbox" value="苏菲" class="check"> 苏菲
+        <input type="checkbox" value="苏卡穆约" class="check"> 苏卡穆约
+        <input type="checkbox" value="双塔" class="check"> 双塔
+        <input type="checkbox" value="李俊慧" class="check"> 李俊慧
+        <input type="checkbox" value="刘雨辰" class="check"> 刘雨辰
+        <input type="checkbox" value="张楠" class="check"> 张楠
+        <input type="checkbox" value="刘成" class="check"> 刘成
+        <input type="checkbox" value="郑思维" class="check"> 郑思维
+    </div>
+    <script>
+        document.getElementById("fname").addEventListener("focus", myFunction);
+        document.getElementById("checkboxwrap").addEventListener("click", myClick);
+        function myFunction() {
+            document.getElementById("checkboxwrap").setAttribute('style','display:block');
+        }
+
+        function myClick(e) {
+            var ck = document.getElementsByClassName("check");
+            var text = '';
+            console.log(ck);
+            for (var i=0; i<ck.length;i++){
+                console.log(ck[i]);
+                console.log(ck[i].checked);
+                console.log(ck[i].value);
+                if (ck[i].checked){
+                    var temp = ck[i].value + ",";
+                    text += temp;
+                }
+            }
+            document.getElementById("fname").value = text;
+        }
+
+        function beforeSubmit() {
+
+        }
+    </script>
+</form>
+</body>
+</html>
