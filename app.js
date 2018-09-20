@@ -7,6 +7,7 @@ const bodyPaser = require('body-parser');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const videoRouter = require('./routes/videos');
 
 const app = express();
 
@@ -19,10 +20,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'views')));
 
 app.use(bodyPaser.urlencoded({extended: false}));
 app.use('/', indexRouter);
 app.use('/user.json', usersRouter);
+app.use('/videos.json', videoRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
