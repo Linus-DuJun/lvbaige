@@ -24,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'views')));
 
 app.use(bodyPaser.urlencoded({extended: false}));
 app.use('/', indexRouter);
-app.use('/user.json', usersRouter);
+app.use('/users.json', usersRouter);
 app.use('/videos.json', videoRouter);
 
 // catch 404 and forward to error handler

@@ -5,7 +5,8 @@
     <title>添加</title>
 </head>
 <body>
-<form action="/video.json" method="post" onsubmit="return beforeSubmit()">
+<form action="/videos.json" method="post" >
+    <input type="hidden" name="_a", value="add" />
     视频ID: <input type="text" name="id"> <br />
     分类: <select name="category">
             <option value="1">男双</option>
@@ -17,8 +18,21 @@
     标题: <input type="text" name="title"> <br/>
     地点: <input type="text" name="location"> <br/>
     时间: <input type="text" name="year"> <br />
-    标签: <input type="text" id="fname">
+    标签: <input type="text" id="label" name="labels"><br />
+    <input type="submit" value="提交">
     <div id="checkboxwrap" style="display:none">
+        <br />
+        <input type="checkbox" value="桃田贤斗" class="check"> 桃田贤斗
+        <input type="checkbox" value="安赛龙" class="check"> 安赛龙
+        <input type="checkbox" value="李宗伟" class="check"> 李宗伟
+        <input type="checkbox" value="林丹" class="check"> 林丹
+        <input type="checkbox" value="谌龙" class="check"> 谌龙
+        <input type="checkbox" value="石宇奇" class="check"> 石宇奇
+        <input type="checkbox" value="周天成" class="check"> 周天成
+        <input type="checkbox" value="孙完虎" class="check"> 孙完虎
+        <input type="checkbox" value="孙完虎" class="check"> 孙完虎
+        <input type="checkbox" value="黄宇翔" class="check"> 黄宇翔 <br /><br /><br />
+
         <input type="checkbox" value="苏菲" class="check"> 苏菲
         <input type="checkbox" value="苏卡穆约" class="check"> 苏卡穆约
         <input type="checkbox" value="双塔" class="check"> 双塔
@@ -26,10 +40,100 @@
         <input type="checkbox" value="刘雨辰" class="check"> 刘雨辰
         <input type="checkbox" value="张楠" class="check"> 张楠
         <input type="checkbox" value="刘成" class="check"> 刘成
+        <input type="checkbox" value="嘉村健士" class="check"> 嘉村健士
+        <input type="checkbox" value="园田启悟" class="check"> 园田启悟
+        <input type="checkbox" value="法加尔" class="check"> 法加尔
+        <input type="checkbox" value="阿德里安托" class="check"> 阿德里安托 <br />
+
+        <input type="checkbox" value="李龙大" class="check"> 李龙大
+        <input type="checkbox" value="金基正" class="check"> 金基正
+        <input type="checkbox" value="鸡血" class="check"> 鸡血
+        <input type="checkbox" value="鲍伊" class="check"> 鲍伊
+        <input type="checkbox" value="井上拓斗" class="check"> 井上拓斗
+        <input type="checkbox" value="金子祐树" class="check"> 金子祐树
+        <input type="checkbox" value="陈宏麟" class="check"> 陈宏麟
+        <input type="checkbox" value="王齐麟" class="check"> 王齐麟  <br />
+
+        <input type="checkbox" value="韩呈恺" class="check"> 韩呈恺
+        <input type="checkbox" value="周昊东" class="check"> 周昊东
+        <input type="checkbox" value="李洋" class="check"> 李洋
+        <input type="checkbox" value="李哲辉" class="check"> 李哲辉
+        <input type="checkbox" value="何济霆" class="check"> 何济霆
+        <input type="checkbox" value="谭强" class="check"> 谭强
+        <input type="checkbox" value="任翔宇" class="check"> 任翔宇
+        <input type="checkbox" value="欧烜屹" class="check"> 欧烜屹
+        <input type="checkbox" value="王懿律" class="check"> 王懿律
+        <input type="checkbox" value="黄凯翔" class="check"> 黄凯翔
+        <br /><br /><br />
+
+
         <input type="checkbox" value="郑思维" class="check"> 郑思维
+        <input type="checkbox" value="黄雅琼" class="check"> 黄雅琼
+
+        <input type="checkbox" value="王懿律" class="check"> 王懿律
+        <input type="checkbox" value="黄东萍" class="check"> 黄东萍
+
+        <input type="checkbox" value="张楠" class="check"> 张楠
+        <input type="checkbox" value="李茵晖" class="check"> 李茵晖
+
+        <input type="checkbox" value="邓俊文" class="check"> 邓俊文
+        <input type="checkbox" value="谢影雪" class="check"> 谢影雪
+        <input type="checkbox" value="陈炳顺" class="check"> 陈炳顺
+        <input type="checkbox" value="吴柳萤" class="check"> 吴柳萤 <br />
+        <input type="checkbox" value="渡边勇大" class="check"> 渡边勇大
+        <input type="checkbox" value="东野有纱" class="check"> 东野有纱
+        <input type="checkbox" value="艾哈迈德" class="check"> 艾哈迈德
+        <input type="checkbox" value="纳西尔" class="check"> 纳西尔
+        <input type="checkbox" value="克里斯蒂安森" class="check"> 克里斯蒂安森
+        <input type="checkbox" value="佩蒂森" class="check"> 佩蒂森
+
+        <br /> <br /> <br />
+        <input type="checkbox" value="福岛由纪" class="check"> 福岛由纪
+        <input type="checkbox" value="广田彩花" class="check"> 广田彩花
+
+        <input type="checkbox" value="陈清晨" class="check"> 陈清晨
+        <input type="checkbox" value="贾一凡" class="check"> 贾一凡
+
+        <input type="checkbox" value="波莉" class="check"> 波莉
+        <input type="checkbox" value="拉哈尤" class="check"> 拉哈尤
+
+        <input type="checkbox" value="松友美佐纪" class="check"> 松友美佐纪
+        <input type="checkbox" value="高桥礼华" class="check"> 高桥礼华
+        <input type="checkbox" value="田中志穗" class="check"> 田中志穗
+        <input type="checkbox" value="米元小春" class="check"> 米元小春<br />
+        <input type="checkbox" value="松本麻佑" class="check"> 松本麻佑
+        <input type="checkbox" value="永原和可那" class="check"> 永原和可那
+        <input type="checkbox" value="李绍希" class="check"> 李绍希
+        <input type="checkbox" value="申昇瓒" class="check"> 申昇瓒
+        <input type="checkbox" value="黄东萍" class="check"> 黄东萍
+        <input type="checkbox" value="李茵辉" class="check"> 李茵辉
+        <br />  <br /> <br />
+
+        <input type="checkbox" value="戴资颖" class="check"> 戴资颖
+        <input type="checkbox" value="山口茜" class="check"> 山口茜
+
+        <input type="checkbox" value="辛德胡" class="check"> 辛德胡
+        <input type="checkbox" value="因达农" class="check"> 因达农
+
+        <input type="checkbox" value="马琳" class="check"> 马琳
+        <input type="checkbox" value="陈雨菲" class="check"> 陈雨菲
+
+        <input type="checkbox" value="何冰娇" class="check"> 何冰娇
+        <input type="checkbox" value="奥原希望" class="check"> 奥原希望
+        <input type="checkbox" value="成池铉" class="check"> 成池铉
+        <input type="checkbox" value="内维尔" class="check"> 内维尔<br />
+        <input type="checkbox" value="高昉洁" class="check"> 高昉洁
+        <input type="checkbox" value="韩悦" class="check"> 韩悦
+        <input type="checkbox" value="李雪芮" class="check"> 李雪芮
+        <input type="checkbox" value="申昇瓒" class="check"> 申昇瓒
+        <input type="checkbox" value="黄东萍" class="check"> 黄东萍
+        <input type="checkbox" value="李茵辉" class="check"> 李茵辉
+
+
+
     </div>
     <script>
-        document.getElementById("fname").addEventListener("focus", myFunction);
+        document.getElementById("label").addEventListener("focus", myFunction);
         document.getElementById("checkboxwrap").addEventListener("click", myClick);
         function myFunction() {
             document.getElementById("checkboxwrap").setAttribute('style','display:block');
@@ -48,12 +152,9 @@
                     text += temp;
                 }
             }
-            document.getElementById("fname").value = text;
+            document.getElementById("label").value = text;
         }
 
-        function beforeSubmit() {
-
-        }
     </script>
 </form>
 </body>
