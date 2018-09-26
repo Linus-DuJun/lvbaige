@@ -7,7 +7,8 @@ const videoSchema = new mongoose.Schema({
     label: {type: Array, required: true, default: []},
     location: {type: String, required: true},
     year: {type: Number, required: true},
-    isLatest: {type: Number, enum: [0, 1], default: 0}
+    isLatest: {type: Number, enum: [0, 1], default: 1}, // 1 = true, 0 = false
+    sourceId: {type: Number, enum: [1, 2, 3, 4], required: true, default: 1} // 1 = 腾讯视频， 2 = B站， 3 = 优酷   4 = 自己
 });
 
 

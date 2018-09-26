@@ -5,7 +5,7 @@
     <title>添加</title>
 </head>
 <body>
-<form action="/videos.json" method="post" >
+<form action="/videos.json" method="post" onsubmit="return beforeSubmit()">
     <input type="hidden" name="_a", value="add" />
     视频ID: <input type="text" name="id"> <br />
     分类: <select name="category">
@@ -14,6 +14,12 @@
             <option value="3">女双</option>
             <option value="4">男单</option>
             <option value="5">女单</option>
+         </select> <br />
+    来源：<select name="source">
+        <option value="1">腾讯视频</option>
+        <option value="2">B站</option>
+        <option value="3">优酷</option>
+        <option value="4">自己</option>
          </select> <br />
     标题: <input type="text" name="title"> <br/>
     地点: <input type="text" name="location"> <br/>
@@ -154,7 +160,9 @@
             }
             document.getElementById("label").value = text;
         }
-
+        function beforeSubmit() {
+            return true;
+        }
     </script>
 </form>
 </body>

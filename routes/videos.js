@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const VideoProxy = require("../proxy/VideoProxy");
 
 
 router.post("/", function (request, response, next) {
@@ -9,7 +10,14 @@ router.post("/", function (request, response, next) {
         //TODO   add logic for update latest videos.
         response.redirect("./addvideo.html");
     } else {
-        response.redirect("./addvideo.html");
+        VideoProxy.addVideo(request.body, function (error, data) {
+            if (error) {
+                console.log(error)
+                response.send(error);
+            } else {
+                response.redirect("./addvideo.html");
+            }
+        })
     }
 })
 
