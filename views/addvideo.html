@@ -24,6 +24,7 @@
     标题: <input type="text" name="title"> <br/>
     地点: <input type="text" name="location"> <br/>
     时间: <input type="text" name="year"> <br />
+    地址: <input type="text" id="sourceUrl" name="sourceUrl"> <br />
     标签: <input type="text" id="label" name="labels"><br />
     <input type="submit" value="提交">
     <div id="checkboxwrap" style="display:none">
@@ -159,6 +160,10 @@
                 }
             }
             document.getElementById("label").value = text;
+            var urlElement = document.getElementById("sourceUrl");
+            var fullUrl = urlElement.value;
+            var recordUrl = fullUrl.substring(fullUrl.indexOf(":"));
+            urlElement.value = recordUrl;
         }
         function beforeSubmit() {
             return true;

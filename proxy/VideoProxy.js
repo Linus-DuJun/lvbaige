@@ -3,13 +3,24 @@ const videoSchema = require('../db/schemas/video');
 
 const Video = mongoose.model("Video", videoSchema);
 
+function getHotVideos(callback) {
+    Video.query()
+}
+
+function getVideosByStar(star, callback) {
+
+}
+
+function getAllVideos(callback) {
+
+}
+
+
 function addVideo(data, callback) {
     let labels = data.labels;
-    console.log(typeof labels);
     let subLabel = labels.substring(0, labels.length - 1);
     let labelArray = subLabel.split(",");
-    console.log(labelArray);
-    console.log(typeof labelArray);
+    console.log(data.sourceUrl);
     let video = new Video({
         id: data.id,
         category: data.category,
@@ -17,6 +28,7 @@ function addVideo(data, callback) {
         label: labelArray,
         location: data.location,
         year: data.year,
+        url: data.sourceUrl,
         sourceId: data.source
     });
     video.save(function (error, data) {
@@ -24,4 +36,14 @@ function addVideo(data, callback) {
     })
 }
 
+function resetHotFlag(callback) {
+    Video.updateMany({isLatest: 1}, {isLatest: 0}, function (error, data) {
+        callback(error, data);
+    })
+}
+
 module.exports.addVideo = addVideo;
+module.exports.resetHotFlag = resetHotFlag;
+module.exports.getHotVideos = getHotVideos;
+module.exports.getVideoByStar = getVideosByStar;
+module.exports.getAllVideos = getAllVideos;
