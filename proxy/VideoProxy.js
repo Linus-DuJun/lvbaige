@@ -1,18 +1,29 @@
 const mongoose = require('mongoose');
-const videoSchema = require('../db/schemas/video');
+const memjs = require('memjs');
+const Constants = require('../utils/Constant');
+const videoSchema = require('../db/schemas/VideoSchema');
 
 const Video = mongoose.model("Video", videoSchema);
 
+const projection = 'id title realUrl';
+
 function getHotVideos(callback) {
-    Video.query()
+    Video.find({isLatest: 1}, projection, function (error, data) {
+        callback(error, data)
+    })
 }
 
 function getVideosByStar(star, callback) {
-
+    console.log(star);
+    Video.find({label: star}, projection,  function (error, data) {
+        callback(error, data);
+    })
 }
 
 function getAllVideos(callback) {
-
+    Video.find({}, projection, function (error, data) {
+        callback(error, data);
+    })
 }
 
 
@@ -28,7 +39,7 @@ function addVideo(data, callback) {
         label: labelArray,
         location: data.location,
         year: data.year,
-        url: data.sourceUrl,
+        realUrl: data.sourceUrl,
         sourceId: data.source
     });
     video.save(function (error, data) {

@@ -7,7 +7,7 @@ const bodyPaser = require('body-parser');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const videoRouter = require('./routes/videos');
+const videoRouter = require('./routes/RouterVideo');
 
 const app = express();
 
