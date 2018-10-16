@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const memjs = require('memjs');
+const memcacheClient = memjs.Client.create()
 const Constants = require('../utils/Constant');
 const videoSchema = require('../db/schemas/VideoSchema');
 
