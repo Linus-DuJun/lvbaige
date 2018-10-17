@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const memjs = require('memjs');
-const memcacheClient = memjs.Client.create()
+const memcacheClient = require('../cache/MemCacheClient');
+const MemCacheUtil = require('../utils/MemCacheUtil');
 const Constants = require('../utils/Constant');
 const videoSchema = require('../db/schemas/VideoSchema');
 
@@ -9,21 +9,59 @@ const Video = mongoose.model("Video", videoSchema);
 const projection = 'id title realUrl';
 
 function getHotVideos(callback) {
-    Video.find({isLatest: 1}, projection, function (error, data) {
-        callback(error, data)
+    memcacheClient.get(Constants.VIDEO_GET_A_HOT, function (error, cache) {
+        if (error) {
+           logMemCacheGetError(Constants.VIDEO_GET_A_HOT)
+        } else {
+            if (cache === undefined) {
+                Video.find({isLatest: 1}, projection, function (error, data) {
+                    logMemCacheGetFromDb(Constants.VIDEO_GET_A_HOT);
+                    MemCacheUtil.save(Constants.VIDEO_GET_A_HOT, data, Constants.MEM_CACHE_TTL_HOT);
+                    callback(error, data);
+                })
+            } else {
+                logMemCacheGetFromCache(Constants.VIDEO_GET_A_HOT);
+                callback(null, cache);
+            }
+        }
     })
 }
 
 function getVideosByStar(star, callback) {
-    console.log(star);
-    Video.find({label: star}, projection,  function (error, data) {
-        callback(error, data);
+    memcacheClient.get(star, function(error, cache) {
+        if (error) {
+            logMemCacheGetError(star)
+        } else {
+            if (cache === undefined) {
+                Video.find({label: star}, projection,  function (error, data) {
+                    logMemCacheGetFromDb(star);
+                    MemCacheUtil.save(star, data, Constants.MEM_CACHE_TTL_START);
+                    callback(error, data);
+                })
+            } else {
+                logMemCacheGetFromCache(star)
+                callback(null, cache);
+            }
+        }
     })
 }
 
 function getAllVideos(callback) {
-    Video.find({}, projection, function (error, data) {
-        callback(error, data);
+    memcacheClient.get(Constants.VIDEO_GET_A_ALL, function (error, cache) {
+        if (error) {
+            logMemCacheGetError(Constants.VIDEO_GET_A_ALL);
+        } else {
+            if (cache === undefined) {
+                logMemCacheGetFromDb(Constants.VIDEO_GET_A_ALL);
+                Video.find({}, projection, function (error, data) {
+                    MemCacheUtil.save(Constants.VIDEO_GET_A_ALL, data, Constants.MEM_CACHE_TTL_ALL);
+                    callback(error, data);
+                })
+            } else {
+                logMemCacheGetFromCache(Constants.VIDEO_GET_A_ALL);
+                callback(null, cache);
+            }
+        }
     })
 }
 
@@ -44,8 +82,26 @@ function addVideo(data, callback) {
         sourceId: data.source
     });
     video.save(function (error, data) {
+        if (error) {
+            console.log(error);
+        } else {
+
+        }
         callback(error, data);
     })
+}
+
+function logMemCacheGetFromCache(key) {
+    console.log("get data from memcache: " + key);
+}
+
+function logMemCacheGetFromDb(key) {
+    console.log("get data from db" + key);
+}
+
+function logMemCacheGetError(key, error) {
+    console.log("Get data from mem cache got error: " + key);
+    console.log(error);
 }
 
 function resetHotFlag(callback) {

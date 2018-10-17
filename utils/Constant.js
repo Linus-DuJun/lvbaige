@@ -3,5 +3,8 @@ module.exports = {
  VIDEO_GET_A_STAR: 'getStar',
  VIDEO_GET_A_HOT: 'getHot',
  VIDEO_POST_ADD: 'add',
- VIDEO_POST_RESET: 'reset'
+ VIDEO_POST_RESET: 'reset',
+ MEM_CACHE_TTL_HOT: 3600,
+ MEM_CACHE_TTL_START: 3600 * 10,
+ MEM_CACHE_TTL_ALL: 3600 * 20
 }
