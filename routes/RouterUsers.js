@@ -26,7 +26,7 @@ router.get('/count', function (req, res, next) {
 
 router.post('/', function (req, res, next) {
     console.log(req.body);
-    userProxy.addUser(function (error, user) {
+    userProxy.addUser(req.body, function (error, user) {
         if (error) {
           res.send('error happened');
         } else {

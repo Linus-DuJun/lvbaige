@@ -1,16 +1,18 @@
 const mongoose = require('../db/connection');
 const userSchema = require('../db/schemas/user');
+const md5 = require("md5");
 
 const User = mongoose.model('User', userSchema);
 
-function addUser(callback) {
-    let linus = new User({
-        email: 'linus.du@stoamigo.com',
-        nickname: 'linus.du',
-        password: '123456'
+function addUser(data, callback) {
+    let user = new User({
+        email: data.email,
+        nickname: data.username,
+        password: md5(data.password + "user-lbg"),
+        gender: data.gender
     })
 
-    linus.save(function (error, user) {
+    user.save(function (error, user) {
         if (error) {
             console.log(error);
         } else {
