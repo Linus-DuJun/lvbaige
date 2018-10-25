@@ -17,7 +17,7 @@ function getHotVideos(callback) {
                 Video.find({isLatest: 1}, projection, function (error, data) {
                     logMemCacheGetFromDb(Constants.VIDEO_GET_A_HOT);
                     MemCacheUtil.save(Constants.VIDEO_GET_A_HOT, data, Constants.MEM_CACHE_TTL_HOT);
-                    callback(error, data);
+                    callback(error);
                 })
             } else {
                 logMemCacheGetFromCache(Constants.VIDEO_GET_A_HOT);

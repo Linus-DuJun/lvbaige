@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const VideoProxy = require("../proxy/VideoProxy");
 const Constants = require("../utils/Constant");
+const JsonUtil = require('../utils/JsonFormater');
 
 router.get("/", function (request, response, next) {
     let action = request.query._a;
@@ -28,8 +29,9 @@ function getHotVideos(request, response, next) {
     VideoProxy.getHotVideos(function (error, data) {
         if (error) {
             console.log(error);
+            sendResponseWithErrorInfo(response)
         } else {
-            response.json(data);
+            sendResponseWithData(response, data)
         }
     })
 }
@@ -38,8 +40,10 @@ function getAllVideos(request, response, next) {
     VideoProxy.getAllVideos(function (error, data) {
         if (error) {
             console.log(error);
+            sendResponseWithErrorInfo(response)
         } else {
             console.log(data);
+            sendResponseWithData(response, data)
         }
     })
 }
@@ -48,8 +52,10 @@ function getVideoByStar(request, response, next) {
     VideoProxy.getVideoByStar(request.query.star, function (error, data) {
         if (error) {
             console.log(error);
+            sendResponseWithErrorInfo(response)
         } else {
             console.log(data);
+            sendResponseWithData(response, data)
         }
     })
 }
@@ -74,6 +80,14 @@ function addVideo(request, response, next) {
             response.redirect("./addvideo.html");
         }
     })
+}
+
+function sendResponseWithErrorInfo(response) {
+    response.status(200).json(JsonUtil.generateJsonResponse(Constants.STATUS_CODE_OK, data))
+}
+
+function sendResponseWithData(response, data) {
+    response.status(200).json(JsonUtil.generateJsonResponse(Constants.STATUS_CODE_OK, data))
 }
 
 module.exports = router;

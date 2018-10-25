@@ -6,5 +6,16 @@ module.exports = {
  VIDEO_POST_RESET: 'reset',
  MEM_CACHE_TTL_HOT: 3600,
  MEM_CACHE_TTL_START: 3600 * 10,
- MEM_CACHE_TTL_ALL: 3600 * 20
+ MEM_CACHE_TTL_ALL: 3600 * 20,
+
+ USER_A_REGISTER: 'register',
+ USER_A_LOGIN: 'login',
+ USER_A_SET_SHARE: 'setShare',
+ USER_A_SET_VIP: 'setVip',
+
+
+ STATUS_CODE_OK: 0,
+ STATUS_CODE_ERROR: -1,
+ STATUS_ERROR_MESSAGE: 'Server is busy now, plz try again a later'
+
 }
