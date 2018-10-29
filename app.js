@@ -4,13 +4,14 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const bodyPaser = require('body-parser');
+const session = require('./sessions/ExpressSession');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/RouterUsers');
 const videoRouter = require('./routes/RouterVideo');
 
 const app = express();
-
+app.set('trust proxy', 1) // trust first proxy
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'views')));
 
 app.use(bodyPaser.urlencoded({extended: false}));
+app.use(session);
 app.use('/', indexRouter);
 app.use('/users.json', usersRouter);
 app.use('/videos.json', videoRouter);
