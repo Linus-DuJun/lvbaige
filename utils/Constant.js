@@ -16,6 +16,11 @@ module.exports = {
 
  STATUS_CODE_OK: 0,
  STATUS_CODE_ERROR: -1,
- STATUS_ERROR_MESSAGE: 'Server is busy now, plz try again a later'
+ STATUS_USER_EXISTED: -2,
+ STATUS_USER_NOT_EXISTED: -3,
+ STATUS_USER_EXISTED_MESSAGE: 'User already registered!',
+ STATUS_USER_NOT_EXISTED_MESSAGE: 'User not exist, we created one for you',
+ STATUS_ERROR_MESSAGE: 'Server is busy now, plz try again a later',
+ STATUS_OK_MESSAGE: 'OK'
 
 }

@@ -28,21 +28,14 @@ router.get('/count', function (req, res, next) {
 router.post('/', function (req, res, next) {
     let action = req.body._a;
     if (action === Constant.USER_A_REGISTER) {
-        userProxy.addUser(req.body, function (error, user) {
-            if (error) {
-                res.send('error happened');
-            } else {
-                res.send(user.greeting());
-            }
-        })
+        userProxy.addUser(req.body, data => res.json(data));
     } else if (action === Constant.USER_A_LOGIN) {
 
     } else if (action === Constant.USER_A_SET_SHARE) {
-
+        userProxy.updateShare(req.body, data => res.json(data));
     } else if (action === Constant.USER_A_SET_VIP) {
-
+        userProxy.updateVip(req.body, data => res.json(data));
     }
-
 })
 
 module.exports = router;
