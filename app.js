@@ -22,9 +22,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'views')));
-
-app.use(bodyPaser.urlencoded({extended: false}));
 app.use(session);
+app.use(bodyPaser.urlencoded({extended: false}));
 app.use('/', indexRouter);
 app.use('/users.json', usersRouter);
 app.use('/videos.json', videoRouter);

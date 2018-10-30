@@ -21,7 +21,7 @@ function addUser(data, callback) {
                     if (error) {
                         callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_ERROR, Constants.STATUS_ERROR_MESSAGE));
                     } else {
-                        callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_OK, Constants.STATUS_OK_MESSAGE));
+                        callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_OK, user));
                     }
                 })
             }
@@ -35,7 +35,7 @@ function updateVip(data, callback) {
             callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_ERROR, Constants.STATUS_ERROR_MESSAGE));
         } else {
             console.log(data.vipDate);
-            callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_OK, Constants.STATUS_OK_MESSAGE));
+            callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_OK, data));
         }
     })
 }
@@ -45,7 +45,7 @@ function updateShare(data, callback) {
         if (error) {
             callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_ERROR, Constants.STATUS_ERROR_MESSAGE));
         } else {
-            callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_OK, Constants.STATUS_OK_MESSAGE))
+            callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_OK, data))
         }
     })
 }
@@ -63,11 +63,11 @@ function login(data, callback) {
                     if (error) {
                         callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_ERROR, Constants.STATUS_ERROR_MESSAGE));
                     } else {
-                        callback(JsonFormater.generateJsonResponse(Constants.STATUS_USER_NOT_EXISTED, Constants.STATUS_USER_NOT_EXISTED_MESSAGE));
+                        callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_OK, user));
                     }
                 })
             } else {
-                callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_OK, Constants.STATUS_OK_MESSAGE));
+                callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_OK, data));
             }
         }
     })

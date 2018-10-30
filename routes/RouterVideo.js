@@ -3,6 +3,7 @@ const router = express.Router();
 const VideoProxy = require("../proxy/VideoProxy");
 const Constants = require("../utils/Constant");
 const JsonUtil = require('../utils/JsonFormater');
+const SessionStore = require('../sessions/MongoSessionStore');
 
 router.get("/", function (request, response, next) {
     let action = request.query._a;
@@ -17,8 +18,19 @@ router.get("/", function (request, response, next) {
 
 router.post("/", function (request, response, next) {
     let action = request.body._a;
-    console.log(action);
     if (Constants.VIDEO_POST_RESET === action) {
+        console.log("reset: " + request.session.id);
+        SessionStore.get(request.session.id, function (error, session) {
+            if (error) {
+                console.log(error);
+            } else {
+                if (session) {
+                    console.log(session.user);
+                } else {
+                    console.log('session is null or undefined');
+                }
+            }
+        })
         resetHotFlag(request, response, next);
     } else if (Constants.VIDEO_POST_ADD === action) {
         addVideo(request, response, next);

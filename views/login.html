@@ -6,14 +6,8 @@
 </head>
 <body>
 <form action="/users.json" method="post" onsubmit="return beforeSubmit()">
-    <input type="hidden" name="_a", value="register" />
+    <input type="hidden" name="_a", value="login" />
     Tel: <input id="tel" type="number" name="tel" /> <br />
-    Name：<input id="username" type="text" name="username" /> <br />
-    Password：<input id="password" type="password" name="password" /> <br />
-    Gender: <select id="gender" name="gender">
-                <option value="1">男</option>
-                <option value="0">女</option>
-            </select>
     <input type="submit" value="Submit" />
 </form>
 <script type="text/javascript">
