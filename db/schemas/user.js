@@ -14,4 +14,8 @@ userSchema.methods.greeting = function () {
     return 'hello I am ' + this.nickname;
 }
 
+userSchema.methods.isRoot = function() {
+    return this.role === 917;
+}
+
 module.exports = userSchema;

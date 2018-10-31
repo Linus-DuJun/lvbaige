@@ -8,32 +8,54 @@ const SessionStore = require('../sessions/MongoSessionStore');
 router.get("/", function (request, response, next) {
     let action = request.query._a;
     if (Constants.VIDEO_GET_A_ALL === action) {
-        getAllVideos(request, response, next);
+        SessionStore.get(request.session.id, function (error, session) {
+            if (error) {
+                response.json(JsonUtil.generateJsonResponse(Constants.STATUS_CODE_OK, Constants.STATUS_NOT_USER));
+            } else {
+                getAllVideos(request, response, next);
+            }
+        });
     } else if (Constants.VIDEO_GET_A_HOT === action) {
         getHotVideos(request, response, next);
     } else if (Constants.VIDEO_GET_A_STAR === action) {
-        getVideoByStar(request, response, next);
+        SessionStore.get(request.session.id, function (error, session) {
+            if (error) {
+                response.json(JsonUtil.generateJsonResponse(Constants.STATUS_CODE_OK, Constants.STATUS_NOT_USER));
+            } else {
+                getVideoByStar(request, response, next);
+            }
+        });
     }
 });
 
 router.post("/", function (request, response, next) {
     let action = request.body._a;
     if (Constants.VIDEO_POST_RESET === action) {
-        console.log("reset: " + request.session.id);
         SessionStore.get(request.session.id, function (error, session) {
             if (error) {
                 console.log(error);
+                response.status(404);
             } else {
-                if (session) {
-                    console.log(session.user);
+                if (session.user.role === 917) {
+                    resetHotFlag(request, response, next);
                 } else {
-                    console.log('session is null or undefined');
+                    response.status(404);
+                }
+            }
+        });
+    } else if (Constants.VIDEO_POST_ADD === action) {
+        SessionStore.get(request.session.id, function (error, session) {
+            if (error) {
+                console.log(error);
+                response.status(404);
+            } else {
+                if (session.user.role === 917) {
+                    addVideo(request, response, next);
+                } else {
+                    response.status(404);
                 }
             }
         })
-        resetHotFlag(request, response, next);
-    } else if (Constants.VIDEO_POST_ADD === action) {
-        addVideo(request, response, next);
     }
 });
 

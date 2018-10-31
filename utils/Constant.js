@@ -21,6 +21,7 @@ module.exports = {
  STATUS_USER_EXISTED_MESSAGE: 'User already registered!',
  STATUS_USER_NOT_EXISTED_MESSAGE: 'User not exist, we created one for you',
  STATUS_ERROR_MESSAGE: 'Server is busy now, plz try again a later',
- STATUS_OK_MESSAGE: 'OK'
-
+ STATUS_OK_MESSAGE: 'OK',
+ STATUS_PERMISSION_DENY: 'Permission denied',
+ STATUS_NOT_USER: 'Not Login'
 }
