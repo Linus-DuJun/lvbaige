@@ -7,9 +7,11 @@ const md5 = require("md5");
 const User = mongoose.model('User', userSchema);
 
 function addUser(data, callback) {
+    date.setMonth(date.getMonth() + 9);
     let user = new User({
-        tel: data.tel,
-    })
+        tel: data.tel
+    });
+
     User.findOne({tel: data.tel}, function (error, data) {
         if (error) {
             callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_ERROR, Constants.STATUS_ERROR_MESSAGE));

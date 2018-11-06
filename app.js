@@ -11,7 +11,7 @@ const usersRouter = require('./routes/RouterUsers');
 const videoRouter = require('./routes/RouterVideo');
 
 const app = express();
-app.set('trust proxy', 1) // trust first proxy
+app.set('trust proxy', 1);// trust first proxy
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');

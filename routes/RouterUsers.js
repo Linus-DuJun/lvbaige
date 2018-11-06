@@ -43,7 +43,7 @@ function addUser(request, response) {
     userProxy.addUser(request.body, dbData => {
         if (dbData.code === Constant.STATUS_CODE_OK) {
             request.session.user = dbData.data;
-            if (user.role === 917) {
+            if (dbData.data.role === 917) {
                 response.redirect('./reset.html');
             } else {
                 response.json(dbData);
@@ -57,7 +57,7 @@ function login(req, res) {
         let statusCode = dbData.code;
         if (statusCode === Constant.STATUS_CODE_OK) {
             req.session.user = dbData.data;
-            if (user.role === 917) {
+            if (dbData.data.role === 917) {
                 res.redirect('./reset.html');
             } else {
                 res.json(dbData);
