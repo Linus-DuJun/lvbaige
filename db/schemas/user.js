@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    tel: {type: Number, required: true},
+    email: {type: String, required: true},
+    pwd: {type: String, required: true},
     nickname: {type: String},
     gender: {type: Number, enum: [0, 1], default: 1},  // 0 = 女，1 = 男
     isShared: {type: Boolean, enum: [0, 1], default: 0}, // 0 = false, 1 = true;

@@ -9,10 +9,10 @@ const User = mongoose.model('User', userSchema);
 function addUser(data, callback) {
     date.setMonth(date.getMonth() + 9);
     let user = new User({
-        tel: data.tel
+        email: data.email
     });
 
-    User.findOne({tel: data.tel}, function (error, data) {
+    User.findOne({email: data.email}, function (error, data) {
         if (error) {
             callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_ERROR, Constants.STATUS_ERROR_MESSAGE));
         } else {
@@ -32,7 +32,7 @@ function addUser(data, callback) {
 }
 
 function updateVip(data, callback) {
-    User.updateOne({tel: data.tel}, {vip: 1, vipDate: getVipDate()}, function (error, data) {
+    User.updateOne({email: data.email}, {vip: 1, vipDate: getVipDate()}, function (error, data) {
         if (error) {
             callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_ERROR, Constants.STATUS_ERROR_MESSAGE));
         } else {
@@ -43,7 +43,7 @@ function updateVip(data, callback) {
 }
 
 function updateShare(data, callback) {
-    User.updateOne({tel: data.tel}, {isShared: 1}, function (error, data) {
+    User.updateOne({email: data.email}, {isShared: 1}, function (error, data) {
         if (error) {
             callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_ERROR, Constants.STATUS_ERROR_MESSAGE));
         } else {
@@ -53,13 +53,13 @@ function updateShare(data, callback) {
 }
 
 function login(data, callback) {
-    User.findOne({tel: data.tel}, function (error, data) {
+    User.findOne({email: data.email}, function (error, data) {
         if (error) {
             callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_ERROR, Constants.STATUS_ERROR_MESSAGE));
         } else {
             if (data === null) {
                 let user = new User({
-                    tel: data.tel,
+                    email: data.email,
                 })
                 user.save(function (error, user) {
                     if (error) {
