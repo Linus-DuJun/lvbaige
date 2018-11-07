@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
-const bodyPaser = require('body-parser');
+const bodyParser = require('body-parser');
 const userProxy = require('../proxy/UserProxy');
 const Constant = require('../utils/Constant')
-const User = require('../db/schemas/user');
+const SessionStore = require('../sessions/MongoSessionStore');
+const JsonFormater = require('../utils/JsonFormater');
+
 
 router.use(function (req, res, next) {
     console.log(Date.now());
@@ -48,6 +50,8 @@ function addUser(request, response) {
             } else {
                 response.json(dbData);
             }
+        } else {
+            response.json(dbData);
         }
     });
 }
@@ -62,23 +66,53 @@ function login(req, res) {
             } else {
                 res.json(dbData);
             }
+        } else {
+            res.json(dbData);
         }
     })
 }
 
 function updateShare(req, res) {
-    userProxy.updateShare(req.body, dbData => {
-        if (dbData.code === Constant.STATUS_CODE_OK) {
-            req.session.user = dbData.data;
-            res.json(dbData)
+    SessionStore.get(req.session.id, function (error, session) {
+        if (error) {
+            res.json(JsonFormater.generateJsonResponse(Constant.STATUS_CODE_ERROR, Constant.STATUS_ERROR_MESSAGE))
+        } else {
+            let user = session.user;
+            if (user.email === req.body.email) {
+                userProxy.updateShare(req.body, dbData => {
+                    if (dbData.code === Constant.STATUS_CODE_OK) {
+                        user.isShared = true;
+                        req.session.user.isShared = true;
+                        res.json(JsonFormater.generateJsonResponse(Constant.STATUS_CODE_OK, Constant.STATUS_OK_MESSAGE));
+                    } else {
+                        res.json(dbData)
+                    }
+                });
+            }
         }
-    });
+    })
 }
 
 function updateVip(req, res) {
-    userProxy.updateVip(req.body, dbData => {
-        req.session.user = dbData.data;
-        res.json(dbData)
+    SessionStore.get(req.session.id, function (error, session) {
+        if (error) {
+            res.json(JsonFormater.generateJsonResponse(Constant.STATUS_CODE_ERROR, Constant.STATUS_ERROR_MESSAGE))
+        } else {
+            let user = session.user;
+            if (user.email === req.body.email) {
+                userProxy.updateVip(req.body, dbData => {
+                    if (dbData.code === Constant.STATUS_CODE_OK) {
+                        let date = new Date();
+                        date = date.setMonth(date.getMonth() + 1);
+                        req.session.user.vipDate = date;
+                        res.json(JsonFormater.generateJsonResponse(Constant.STATUS_CODE_OK, Constant.STATUS_OK_MESSAGE))
+                    } else {
+                        //TODO add failed record to file.
+                        res.json(dbData)
+                    }
+                });         
+            }
+        }
     });
 }
 

@@ -7,9 +7,10 @@ const md5 = require("md5");
 const User = mongoose.model('User', userSchema);
 
 function addUser(data, callback) {
-    date.setMonth(date.getMonth() + 9);
     let user = new User({
-        email: data.email
+        email: data.email,
+        pwd: md5(data.password, Constants.APP_KEY),
+        nickname: data.username
     });
 
     User.findOne({email: data.email}, function (error, data) {
@@ -21,7 +22,7 @@ function addUser(data, callback) {
             } else {
                 user.save(function (error, user) {
                     if (error) {
-                        callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_ERROR, Constants.STATUS_ERROR_MESSAGE));
+                        callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_ADD_USER_FAILED, Constants.STATUS_ADD_USER_FAILED_MESSAGE));
                     } else {
                         callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_OK, user));
                     }
@@ -36,7 +37,6 @@ function updateVip(data, callback) {
         if (error) {
             callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_ERROR, Constants.STATUS_ERROR_MESSAGE));
         } else {
-            console.log(data.vipDate);
             callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_OK, data));
         }
     })
@@ -53,17 +53,19 @@ function updateShare(data, callback) {
 }
 
 function login(data, callback) {
-    User.findOne({email: data.email}, function (error, data) {
+    User.findOne({email: data.email, pwd: md5(data.password, Constants.APP_KEY)}, function (error, data) {
         if (error) {
             callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_ERROR, Constants.STATUS_ERROR_MESSAGE));
         } else {
             if (data === null) {
                 let user = new User({
                     email: data.email,
+                    pwd: md5(data.password, Constants.APP_KEY),
+                    nickname: ''
                 })
                 user.save(function (error, user) {
                     if (error) {
-                        callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_ERROR, Constants.STATUS_ERROR_MESSAGE));
+                        callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_ADD_USER_FAILED, Constants.STATUS_ADD_USER_FAILED_MESSAGE));
                     } else {
                         callback(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_OK, user));
                     }

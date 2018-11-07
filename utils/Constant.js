@@ -18,10 +18,14 @@ module.exports = {
  STATUS_CODE_ERROR: -1,
  STATUS_USER_EXISTED: -2,
  STATUS_USER_NOT_EXISTED: -3,
+ STATUS_CODE_ADD_USER_FAILED: -4,
+    STATUS_ADD_USER_FAILED_MESSAGE: 'register failed',
  STATUS_USER_EXISTED_MESSAGE: 'User already registered!',
  STATUS_USER_NOT_EXISTED_MESSAGE: 'User not exist, we created one for you',
  STATUS_ERROR_MESSAGE: 'Server is busy now, plz try again a later',
  STATUS_OK_MESSAGE: 'OK',
  STATUS_PERMISSION_DENY: 'Permission denied',
- STATUS_NOT_USER: 'Not Login'
+ STATUS_NOT_USER: 'Not Login',
+
+ APP_KEY: 'yxmyhl'
 }

@@ -12,6 +12,7 @@ router.get("/", function (request, response, next) {
             if (error) {
                 response.json(JsonUtil.generateJsonResponse(Constants.STATUS_CODE_OK, Constants.STATUS_NOT_USER));
             } else {
+                console.log(session);
                 getAllVideos(request, response, next);
             }
         });

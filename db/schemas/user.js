@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
     gender: {type: Number, enum: [0, 1], default: 1},  // 0 = 女，1 = 男
     isShared: {type: Boolean, enum: [0, 1], default: 0}, // 0 = false, 1 = true;
     role:{type: Number, enum:[0, 917], default: 0},
-    vipDate: {type: Date, default: Date.now}
+    vipDate: {type: Number, default: Date.now}
 });
 
 
