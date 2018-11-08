@@ -8,19 +8,21 @@ const Video = mongoose.model("Video", videoSchema);
 
 const projection = 'id title realUrl';
 
-function getHotVideos(callback) {
-    memcacheClient.get(Constants.VIDEO_GET_A_HOT, function (error, cache) {
+function getHotVideos(requestType, callback) {
+    let hotType = requestType === 'd' ? Constants.GET_VIDEO_DOUBLE_HOT : Constants.GET_VIDEO_SINGLE_HOT;
+    let queryCategory = requestType === 'd' ? 2 : 1;
+    memcacheClient.get(hotType, function (error, cache) {
         if (error) {
-           logMemCacheGetError(Constants.VIDEO_GET_A_HOT)
+           logMemCacheGetError(hotType);
         } else {
             if (cache === undefined) {
-                Video.find({isLatest: 1}, projection, function (error, data) {
-                    logMemCacheGetFromDb(Constants.VIDEO_GET_A_HOT);
-                    MemCacheUtil.save(Constants.VIDEO_GET_A_HOT, data, Constants.MEM_CACHE_TTL_HOT);
+                Video.find({isLatest: 1, parentCategory: queryCategory}, projection, function (error, data) {
+                    logMemCacheGetFromDb(hotType);
+                    MemCacheUtil.save(hotType, data, Constants.MEM_CACHE_TTL_HOT);
                     callback(error);
                 })
             } else {
-                logMemCacheGetFromCache(Constants.VIDEO_GET_A_HOT);
+                logMemCacheGetFromCache(hotType);
                 callback(null, cache);
             }
         }
@@ -39,32 +41,33 @@ function getVideosByStar(star, callback) {
                     callback(error, data);
                 })
             } else {
-                logMemCacheGetFromCache(star)
+                logMemCacheGetFromCache(star);
                 callback(null, cache);
             }
         }
     })
 }
 
-function getAllVideos(callback) {
-    memcacheClient.get(Constants.VIDEO_GET_A_ALL, function (error, cache) {
+function getAllVideos(requestType, callback) {
+    let videoAllType = requestType === 'd' ? Constants.GET_VIDEO_DOUBLE_ALL : Constants.GET_VIDEO_SINGLE_ALL;
+    let queryCategory = requestType === 'd' ? 2 : 1;
+    memcacheClient.get(videoAllType, function (error, cache) {
         if (error) {
-            logMemCacheGetError(Constants.VIDEO_GET_A_ALL);
+            logMemCacheGetError(videoAllType);
         } else {
             if (cache === undefined) {
-                logMemCacheGetFromDb(Constants.VIDEO_GET_A_ALL);
-                Video.find({}, projection, function (error, data) {
-                    MemCacheUtil.save(Constants.VIDEO_GET_A_ALL, data, Constants.MEM_CACHE_TTL_ALL);
+                logMemCacheGetFromDb(videoAllType);
+                Video.find({parentCategory: queryCategory}, projection, function (error, data) {
+                    MemCacheUtil.save(videoAllType, data, Constants.MEM_CACHE_TTL_ALL);
                     callback(error, data);
                 })
             } else {
-                logMemCacheGetFromCache(Constants.VIDEO_GET_A_ALL);
+                logMemCacheGetFromCache(videoAllType);
                 callback(null, cache);
             }
         }
     })
 }
-
 
 function addVideo(data, callback) {
     let labels = data.labels;
@@ -73,7 +76,8 @@ function addVideo(data, callback) {
     console.log(data.sourceUrl);
     let video = new Video({
         id: data.id,
-        category: data.category,
+        parentCategory: data.parentCategory,
+        childCategory: data.childCategory,
         title: data.title,
         label: labelArray,
         location: data.location,

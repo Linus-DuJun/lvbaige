@@ -8,7 +8,11 @@
 <form action="/videos.json" method="post" onsubmit="return beforeSubmit()">
     <input type="hidden" name="_a", value="add" />
     视频ID: <input type="text" name="id"> <br />
-    分类: <select name="category">
+    大类：<select name="parentCategory">
+        <option value="1">单打</option>
+        <option value="2">双打</option>
+        </select>
+    小类: <select name="childCategory">
             <option value="1">男双</option>
             <option value="2">混双</option>
             <option value="3">女双</option>
