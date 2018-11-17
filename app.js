@@ -1,5 +1,6 @@
 const createError = require('http-errors');
 const express = require('express');
+const helmet = require('helmet');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -11,6 +12,7 @@ const usersRouter = require('./routes/RouterUsers');
 const videoRouter = require('./routes/RouterVideo');
 
 const app = express();
+app.use(helmet());
 app.set('trust proxy', 1);// trust first proxy
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
