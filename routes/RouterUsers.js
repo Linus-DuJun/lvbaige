@@ -45,10 +45,12 @@ function addUser(request, response) {
     userProxy.addUser(request.body, dbData => {
         if (dbData.code === Constant.STATUS_CODE_OK) {
             request.session.user = dbData.data;
-            if (dbData.data.role === 917) {
+            let user = dbData.data;
+            user.pwd = request.session.id;
+            if (user.role === 917) {
                 response.redirect('./reset.html');
             } else {
-                response.json(dbData);
+                response.json(JsonFormater.generateJsonResponse(Constant.STATUS_CODE_OK, user));
             }
         } else {
             response.json(dbData);
@@ -61,10 +63,12 @@ function login(req, res) {
         let statusCode = dbData.code;
         if (statusCode === Constant.STATUS_CODE_OK) {
             req.session.user = dbData.data;
+            let user = dbData.data;
+            user.pwd = req.session.id;
             if (dbData.data.role === 917) {
                 res.redirect('./reset.html');
             } else {
-                res.json(dbData);
+                res.json(JsonFormater.generateJsonResponse(Constant.STATUS_CODE_OK, user));
             }
         } else {
             res.json(dbData);

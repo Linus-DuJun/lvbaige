@@ -6,7 +6,7 @@ const videoSchema = require('../db/schemas/VideoSchema');
 
 const Video = mongoose.model("Video", videoSchema);
 
-const projection = 'id title realUrl';
+const projection = 'id title realUrl description';
 
 function getHotVideos(requestType, callback) {
     let hotType = requestType === 'd' ? Constants.GET_VIDEO_DOUBLE_HOT : Constants.GET_VIDEO_SINGLE_HOT;
@@ -83,7 +83,8 @@ function addVideo(data, callback) {
         location: data.location,
         year: data.year,
         realUrl: data.sourceUrl,
-        sourceId: data.source
+        sourceId: data.source,
+        description: data.description
     });
     video.save(function (error, data) {
         if (error) {

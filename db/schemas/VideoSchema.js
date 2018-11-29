@@ -12,7 +12,8 @@ const videoSchema = new mongoose.Schema({
     sourceId: {type: Number, enum: [1, 2, 3, 4], required: true, default: 1}, // 1 = 腾讯视频， 2 = B站， 3 = 优酷   4 = 自己
     realUrl: {type: String, required: true},
     created: {type: Date, default: new Date()},
-    lastModified: {type: Date, default: new Date()}
+    lastModified: {type: Date, default: new Date()},
+    description: {type: String}
 });
 
 module.exports = videoSchema;
