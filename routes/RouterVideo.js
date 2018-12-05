@@ -8,28 +8,29 @@ const SessionStore = require('../sessions/MongoSessionStore');
 
 router.get("/", function (request, response, next) {
     let appId = request.query.appid;
-    if (appId !== Constants.WE_CHAT_MINI_DOUBLE || appId !== Constants.WE_CHAT_MINI_SINGLE) {
-        response.json(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_NOT_FOUND, Constants.STATUS_NOT_FOUND_MESSAGE))
-    }
-    let action = request.query._a;
-    if (Constants.VIDEO_GET_A_ALL === action) {
-        SessionStore.get(request.session.id, function (error, session) {
-            if (error) {
-                response.json(JsonUtil.generateJsonResponse(Constants.STATUS_CODE_OK, Constants.STATUS_NOT_USER));
-            } else {
-                getAllVideos(request, response, next);
-            }
-        });
-    } else if (Constants.VIDEO_GET_A_HOT === action) {
-        getHotVideos(request, response, next);
-    } else if (Constants.VIDEO_GET_A_STAR === action) {
-        SessionStore.get(request.session.id, function (error, session) {
-            if (error) {
-                response.json(JsonUtil.generateJsonResponse(Constants.STATUS_CODE_OK, Constants.STATUS_NOT_USER));
-            } else {
-                getVideoByStar(request, response, next);
-            }
-        });
+    if (appId === Constants.WE_CHAT_MINI_DOUBLE || appId === Constants.WE_CHAT_MINI_SINGLE) {
+        let action = request.query._a;
+        if (Constants.VIDEO_GET_A_ALL === action) {
+            SessionStore.get(request.session.id, function (error, session) {
+                if (error) {
+                    response.json(JsonUtil.generateJsonResponse(Constants.STATUS_CODE_OK, Constants.STATUS_NOT_USER));
+                } else {
+                    getAllVideos(request, response, next);
+                }
+            });
+        } else if (Constants.VIDEO_GET_A_HOT === action) {
+            getHotVideos(request, response, next);
+        } else if (Constants.VIDEO_GET_A_STAR === action) {
+            SessionStore.get(request.session.id, function (error, session) {
+                if (error) {
+                    response.json(JsonUtil.generateJsonResponse(Constants.STATUS_CODE_OK, Constants.STATUS_NOT_USER));
+                } else {
+                    getVideoByStar(request, response, next);
+                }
+            });
+        }
+    } else {
+        response.json(JsonFormater.generateJsonResponse(Constants.STATUS_CODE_NOT_FOUND, Constants.STATUS_NOT_FOUND_MESSAGE));
     }
 });
 
